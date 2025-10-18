@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface TaskListService {
     List<TaskList> listTaskLists();
+    TaskList createTaskList(TaskList taskList);
 }
 
 // The TaskListService interface defines the contract for task list–related business logic in the application.

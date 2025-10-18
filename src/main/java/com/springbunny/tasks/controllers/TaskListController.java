@@ -1,11 +1,10 @@
 package com.springbunny.tasks.controllers;
 
 import com.springbunny.tasks.domain.dto.TaskListDto;
+import com.springbunny.tasks.domain.entities.TaskList;
 import com.springbunny.tasks.mappers.TaskListMapper;
 import com.springbunny.tasks.services.TaskListService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @RequestMapping(path = "/api/task-lists")
 public class TaskListController {
 
-    private final TaskListService taskListService; //TaskListService &TaskListMapper
+    private final TaskListService taskListService; //TaskListService & TaskListMapper injected and annotated by @RestController
     private final TaskListMapper taskListMapper;
 
     public TaskListController(TaskListService taskListService, TaskListMapper taskListMapper) {
@@ -27,6 +26,14 @@ public class TaskListController {
                 .stream()
                 .map(taskListMapper::toDto) //converts the list of TaskLists int TaskListDto
                 .toList(); // coverts stream into list
+    }
+
+    @PostMapping
+    public TaskListDto createTaskList(@RequestBody TaskListDto taskListDto){ // method defined earlier to create new task list; data to be persisted is passed in via @RequestBody
+        TaskList createdTaskList = taskListService.createTaskList( // TaskListDto -> TaskList conversion; taskListService.createTaskList expects TaskList type
+                taskListMapper.fromDto(taskListDto)
+        );
+        return taskListMapper.toDto(createdTaskList); // TaskList -> TaskListDto
     }
 }
 

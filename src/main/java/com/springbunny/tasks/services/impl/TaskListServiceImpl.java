@@ -5,6 +5,7 @@ import com.springbunny.tasks.repositories.TaskListRepository;
 import com.springbunny.tasks.services.TaskListService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service //bean declaration for dependency injection
@@ -19,6 +20,27 @@ public class TaskListServiceImpl implements TaskListService {
     @Override
     public List<TaskList> listTaskLists() {
         return taskListRepository.findAll(); // method defined in Jpa Repository that returns all the required data from DB
+    }
+
+    @Override
+    public TaskList createTaskList(TaskList taskList) { // method to create a new Task list
+        if(null != taskList.getId()){
+            throw new  IllegalArgumentException("Task list alredy has an ID!"); // ensures the task list has no pre-existing ID
+        }
+
+        if(null == taskList.getTitle() || taskList.getTitle().isBlank()){
+            throw new IllegalArgumentException("Task list title must be present!"); // ensures that the title is not empty or blank
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        return taskListRepository.save(new TaskList(  // A new TaskList instance is then created with the current timestamps for creation and update times
+                null,
+                taskList.getTitle(),
+                taskList.getDescription(),
+                null,
+                now,
+                now
+        )); // The taskListRepository.save() call persists this new TaskList object into the database
     }
 }
 // The TaskListServiceImpl class provides the concrete implementation of the TaskListService interface.
