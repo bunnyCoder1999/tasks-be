@@ -11,6 +11,7 @@ public interface TaskListService {
     TaskList createTaskList(TaskList taskList);
     Optional<TaskList> getTaskList(UUID id);
     TaskList updateTaskList (UUID taskListId, TaskList taskList);
+    void deleteTaskList(UUID taskListId);
 }
 
 // The TaskListService interface defines the contract for task list–related business logic in the application.

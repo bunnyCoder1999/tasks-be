@@ -69,6 +69,11 @@ public class TaskListServiceImpl implements TaskListService {
         existingTaskList.setUpdated(LocalDateTime.now());
         return taskListRepository.save(existingTaskList);
     }
+
+    @Override
+    public void deleteTaskList(UUID taskListId) {
+        taskListRepository.deleteById(taskListId);
+    }
 }
 // The TaskListServiceImpl class provides the concrete implementation of the TaskListService interface.
 // Annotated with @Service, it is registered as a Spring bean for dependency injection and marks it as part of the service layer.

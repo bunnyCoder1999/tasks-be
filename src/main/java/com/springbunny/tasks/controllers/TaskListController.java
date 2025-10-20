@@ -55,6 +55,10 @@ public class TaskListController {
         return taskListMapper.toDto(updatedTaskList);
     }
 
+    @DeleteMapping(path = "/{task_list_id}")
+    public void deleteTaskList(@PathVariable("task_list_id") UUID taskListId){
+        taskListService.deleteTaskList(taskListId);
+    }
 }
 
 // The TaskListController class handles incoming HTTP requests related to task lists and returns appropriate responses.
@@ -78,3 +82,6 @@ public class TaskListController {
 // @RequestBody maps the incoming JSON payload to a TaskListDto object representing the updated data.
 // The DTO is converted to an entity using taskListMapper.fromDto(), passed to the service layer for update,
 // and the updated entity is then mapped back to a TaskListDto and returned as the API response.
+
+// The deleteTaskList() method handles HTTP DELETE requests to remove a specific task list by its ID.
+// The @DeleteMapping annotation maps the endpoint, and @PathVariable binds the URL ID to the method parameter before calling the service to delete it.
