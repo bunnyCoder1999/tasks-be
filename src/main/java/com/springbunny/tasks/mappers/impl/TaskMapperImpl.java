@@ -11,15 +11,15 @@ public class TaskMapperImpl implements TaskMapper {
     public Task fromDto(TaskDto taskDto) {
         return new Task(
                 taskDto.id(),
-                taskDto.priority(),
                 taskDto.title(),
                 taskDto.description(),
                 taskDto.dueDate(),
                 taskDto.status(),
+                taskDto.priority(),
                 null,
                 null,
                 null
-                );
+        );
     }
 
     @Override
